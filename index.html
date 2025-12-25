@@ -3,55 +3,220 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DC Cooling Pro • PUE • Free Cooling • Part-Load • Scenarios</title>
+    <title>TermoLoop Pro DC • PUE • Free Cooling • Part‑Load • Scenarios</title>
 
-    <!-- React (CDN) -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-
-    <!-- Babel: JSX'i tarayıcıda derlemek için -->
+    <!-- React (Production CDN) -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- Babel: JSX'i tarayıcıda derlemek için (tek dosya kolay deploy için). -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
-      :root { color-scheme: light; }
-      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background:#fafafa; }
-      .wrap { padding: 16px; max-width: 1180px; margin: 0 auto; line-height: 1.35; }
-      .header { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:12px; }
-      h1 { margin:0; font-size:18px; font-weight:900; letter-spacing:.2px; }
-      .sub { font-size:12px; opacity:.78; margin-top:4px; }
-      .badge { font-size:12px; padding:6px 10px; border:1px solid rgba(0,0,0,.14); border-radius:999px; background:#fff; }
-      .tabs { display:flex; gap:8px; flex-wrap:wrap; margin: 10px 0 12px; }
-      .tabBtn { padding:8px 12px; border-radius:10px; border:1px solid rgba(0,0,0,.14); background:#fff; cursor:pointer; font-weight:700; font-size:13px; }
-      .tabBtn.active { background: rgba(0,0,0,.06); }
-      .grid { display:grid; grid-template-columns: repeat(12, 1fr); gap:12px; align-items:start; }
-      .card { grid-column: span 6; border:1px solid rgba(0,0,0,.14); border-radius:14px; padding:12px; background: #fff; }
-      .card4 { grid-column: span 4; border:1px solid rgba(0,0,0,.14); border-radius:14px; padding:12px; background: #fff; }
-      .card12 { grid-column: span 12; border:1px solid rgba(0,0,0,.14); border-radius:14px; padding:12px; background: #fff; }
-      .title { font-weight:900; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
-      .row { display:grid; grid-template-columns: 1fr 140px; gap:10px; margin-bottom:10px; }
-      .row3 { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:10px; }
-      .label { font-size:12px; opacity:.75; margin-bottom:4px; font-weight:800; }
-      input, select, textarea { width:100%; padding:8px 10px; border-radius:10px; border:1px solid rgba(0,0,0,.18); font-size:14px; background:#fff; }
-      textarea { height:140px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
-      .small { font-size:12px; opacity:.78; }
-      .kpiGrid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; }
-      .kpiGrid2 { display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; }
-      .kpi { border:1px solid rgba(0,0,0,.12); border-radius:12px; padding:10px; background:#fcfcfc; }
-      .kpiLbl { font-size:12px; opacity:.75; font-weight:900; }
-      .kpiVal { font-size:18px; font-weight:1000; margin-top:2px; }
-      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
-      .btn { padding:8px 10px; border-radius:10px; border:1px solid rgba(0,0,0,.14); background:#fff; cursor:pointer; font-weight:800; font-size:13px; }
-      .btn.primary { background: rgba(0,0,0,.06); }
-      .pill { font-size:12px; padding:4px 8px; border:1px solid rgba(0,0,0,.12); border-radius:999px; background:#fff; }
-      .warn { border:1px solid rgba(180,0,0,.25); background: rgba(180,0,0,.06); padding:10px; border-radius:12px; }
-      .ok { border:1px solid rgba(0,120,0,.22); background: rgba(0,120,0,.06); padding:10px; border-radius:12px; }
-      .tooltip { display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:999px; border:1px solid rgba(0,0,0,.18); font-size:12px; opacity:.85; }
-      .right { text-align:right; }
+      :root{
+        color-scheme: light;
+        --bg:#fafafa;
+        --card:#ffffff;
+        --muted:#667085;
+        --text:#111827;
+        --border:rgba(0,0,0,.12);
+        --border2:rgba(0,0,0,.16);
+        --shadow: 0 10px 30px rgba(0,0,0,.06);
+        --soft: rgba(0,0,0,.04);
+        --soft2: rgba(0,0,0,.06);
+        --danger:#b42318;
+        --dangerBg: rgba(180,35,24,.08);
+        --ok:#027a48;
+        --okBg: rgba(2,122,72,.08);
+        --brand:#9d1220;          /* TermoLoop red */
+        --brand2:#7a0f1a;
+      }
 
-      @media (max-width: 980px) {
-        .card, .card4 { grid-column: span 12; }
-        .kpiGrid { grid-template-columns: repeat(2, 1fr); }
-        .row { grid-template-columns: 1fr; }
+      @media (prefers-color-scheme: dark){
+        :root{
+          color-scheme: dark;
+          --bg:#0b0f14;
+          --card:#0f172a;
+          --muted:#98a2b3;
+          --text:#e5e7eb;
+          --border:rgba(255,255,255,.10);
+          --border2:rgba(255,255,255,.14);
+          --shadow: 0 10px 30px rgba(0,0,0,.35);
+          --soft: rgba(255,255,255,.05);
+          --soft2: rgba(255,255,255,.07);
+          --danger:#ff6b6b;
+          --dangerBg: rgba(255,107,107,.12);
+          --ok:#6ee7b7;
+          --okBg: rgba(110,231,183,.10);
+          --brand:#ff3b5c;
+          --brand2:#ff1f48;
+        }
+      }
+
+      *{box-sizing:border-box}
+      body{
+        margin:0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+        background: var(--bg);
+        color: var(--text);
+        line-height:1.35;
+      }
+      a{color:inherit}
+
+      .wrap{ padding:16px; max-width: 1240px; margin:0 auto; }
+      .topbar{
+        display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;
+        margin-bottom:12px;
+      }
+      .brandRow{ display:flex; align-items:center; gap:10px; }
+      .logo{
+        width:34px; height:34px; border-radius:10px;
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+        box-shadow: var(--shadow);
+      }
+      h1{ margin:0; font-size:18px; font-weight:950; letter-spacing:.2px; }
+      .sub{ font-size:12px; color:var(--muted); margin-top:4px; max-width: 840px; }
+      .badge{
+        font-size:12px; padding:7px 10px; border:1px solid var(--border);
+        border-radius:999px; background: var(--card);
+        box-shadow: 0 4px 14px rgba(0,0,0,.04);
+      }
+
+      .tabs{ display:flex; gap:8px; flex-wrap:wrap; margin: 10px 0 12px; }
+      .tabBtn{
+        padding:9px 12px; border-radius:12px; border:1px solid var(--border);
+        background: var(--card); cursor:pointer; font-weight:850; font-size:13px;
+      }
+      .tabBtn.active{ background: var(--soft2); border-color: var(--border2); }
+
+      .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:12px; align-items:start; }
+      .card{
+        grid-column: span 6;
+        border:1px solid var(--border);
+        border-radius:16px;
+        padding:12px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+      }
+      .card4{ grid-column: span 4; }
+      .card8{ grid-column: span 8; }
+      .card12{ grid-column: span 12; }
+      .title{
+        font-weight:950; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+      }
+      .titleLeft{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+      .hint{ font-size:12px; color:var(--muted); font-weight:650; }
+      .row{ display:grid; grid-template-columns: 1fr 160px; gap:10px; margin-bottom:10px; }
+      .row3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-bottom:10px; }
+      .label{ font-size:12px; color:var(--muted); margin-bottom:4px; font-weight:900; display:flex; gap:6px; align-items:center; }
+      input, select, textarea{
+        width:100%;
+        padding:9px 10px;
+        border-radius:12px;
+        border:1px solid var(--border2);
+        font-size:14px;
+        background: transparent;
+        color: var(--text);
+        outline:none;
+      }
+      input:focus, select:focus, textarea:focus{
+        border-color: rgba(157,18,32,.55);
+        box-shadow: 0 0 0 3px rgba(157,18,32,.12);
+      }
+      textarea{ height:160px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
+      .small{ font-size:12px; color:var(--muted); }
+      .kpiGrid{ display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; }
+      .kpiGrid2{ display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; }
+      .kpi{
+        border:1px solid var(--border);
+        border-radius:14px;
+        padding:10px;
+        background: linear-gradient(180deg, var(--card), var(--soft));
+      }
+      .kpiLbl{ font-size:12px; color:var(--muted); font-weight:950; }
+      .kpiVal{ font-size:18px; font-weight:1000; margin-top:2px; letter-spacing:.1px; }
+      .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
+      .btn{
+        padding:9px 10px;
+        border-radius:12px;
+        border:1px solid var(--border);
+        background: var(--card);
+        cursor:pointer;
+        font-weight:900;
+        font-size:13px;
+      }
+      .btn.primary{ background: var(--soft2); border-color: var(--border2); }
+      .btn.danger{ border-color: rgba(180,35,24,.35); background: var(--dangerBg); }
+      .btnRow{ display:flex; gap:8px; flex-wrap:wrap; }
+
+      .pill{
+        font-size:12px; padding:5px 9px;
+        border:1px solid var(--border); border-radius:999px; background: var(--card);
+        color: var(--text);
+      }
+
+      .panel{
+        border:1px solid var(--border);
+        background: var(--soft);
+        padding:10px;
+        border-radius:14px;
+      }
+      .warn{
+        border:1px solid rgba(180,35,24,.30);
+        background: var(--dangerBg);
+        padding:10px;
+        border-radius:14px;
+      }
+      .ok{
+        border:1px solid rgba(2,122,72,.30);
+        background: var(--okBg);
+        padding:10px;
+        border-radius:14px;
+      }
+
+      .tooltipDot{
+        display:inline-flex; align-items:center; justify-content:center;
+        width:18px; height:18px; border-radius:999px;
+        border:1px solid var(--border2);
+        font-size:12px; opacity:.85;
+        user-select:none;
+      }
+      .right{text-align:right}
+      .divider{ height:1px; background: var(--border); margin: 10px 0; }
+
+      /* Inline field error */
+      .fieldErr{
+        margin-top:6px;
+        font-size:12px;
+        color: var(--danger);
+        font-weight:800;
+      }
+      .isBad{
+        border-color: rgba(180,35,24,.55) !important;
+        box-shadow: 0 0 0 3px rgba(180,35,24,.12) !important;
+      }
+
+      /* Chart */
+      .chartWrap{ position:relative; }
+      .chartTip{
+        position:absolute;
+        left: 12px;
+        top: 38px;
+        background: var(--card);
+        border:1px solid var(--border);
+        border-radius:14px;
+        padding:9px 10px;
+        font-size:12px;
+        box-shadow: var(--shadow);
+        pointer-events:none;
+        max-width: 320px;
+      }
+
+      @media (max-width: 1040px){
+        .card{ grid-column: span 12; }
+        .kpiGrid{ grid-template-columns: repeat(2, 1fr); }
+        .row{ grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -67,9 +232,13 @@
         const p = Math.pow(10, d);
         return Math.round(v * p) / p;
       };
+      const safeNum = (v, fallback=0) => {
+        const n = Number(v);
+        return Number.isFinite(n) ? n : fallback;
+      };
 
       function parseCSVTemps(text) {
-        const tokens = text
+        const tokens = String(text||"")
           .replace(/\\r/g, "\\n")
           .split(/[\\n,; \\t]+/)
           .map((s) => s.trim())
@@ -83,7 +252,7 @@
         return temps;
       }
 
-      // Temsili aylık ağırlıklar (gerçek meteoroloji değildir; rapor görünümü içindir)
+      // Temsili aylık ağırlıklar (görsel rapor için; gerçek meteoroloji değildir)
       const MONTH_WEIGHTS = [
         { m: "Oca", w: 0.095 }, { m: "Şub", w: 0.085 }, { m: "Mar", w: 0.085 }, { m: "Nis", w: 0.080 },
         { m: "May", w: 0.080 }, { m: "Haz", w: 0.080 }, { m: "Tem", w: 0.090 }, { m: "Ağu", w: 0.090 },
@@ -91,54 +260,26 @@
       ];
 
       const CITY_PROFILES = [
-        {
-          key: "istanbul",
-          name: "İstanbul (Temsili)",
-          bins: [
-            { t: -2, h: 80 }, { t: 2, h: 400 }, { t: 6, h: 900 }, { t: 10, h: 1200 },
-            { t: 14, h: 1400 }, { t: 18, h: 1300 }, { t: 22, h: 1000 }, { t: 26, h: 700 },
-            { t: 30, h: 300 }, { t: 34, h: 120 }, { t: 38, h: 40 },
-          ],
+        { key:"istanbul", name:"İstanbul (Temsili)",
+          bins:[{t:-2,h:80},{t:2,h:400},{t:6,h:900},{t:10,h:1200},{t:14,h:1400},{t:18,h:1300},{t:22,h:1000},{t:26,h:700},{t:30,h:300},{t:34,h:120},{t:38,h:40}]
         },
-        {
-          key: "ankara",
-          name: "Ankara (Temsili)",
-          bins: [
-            { t: -8, h: 250 }, { t: -2, h: 500 }, { t: 2, h: 850 }, { t: 6, h: 1050 },
-            { t: 10, h: 1200 }, { t: 14, h: 1150 }, { t: 18, h: 1050 }, { t: 22, h: 850 },
-            { t: 26, h: 600 }, { t: 30, h: 300 }, { t: 34, h: 120 }, { t: 38, h: 40 },
-          ],
+        { key:"ankara", name:"Ankara (Temsili)",
+          bins:[{t:-8,h:250},{t:-2,h:500},{t:2,h:850},{t:6,h:1050},{t:10,h:1200},{t:14,h:1150},{t:18,h:1050},{t:22,h:850},{t:26,h:600},{t:30,h:300},{t:34,h:120},{t:38,h:40}]
         },
-        {
-          key: "izmir",
-          name: "İzmir (Temsili)",
-          bins: [
-            { t: 4, h: 250 }, { t: 8, h: 700 }, { t: 12, h: 1100 }, { t: 16, h: 1350 },
-            { t: 20, h: 1400 }, { t: 24, h: 1250 }, { t: 28, h: 900 }, { t: 32, h: 500 },
-            { t: 36, h: 200 }, { t: 40, h: 70 }, { t: 44, h: 20 },
-          ],
+        { key:"izmir", name:"İzmir (Temsili)",
+          bins:[{t:4,h:250},{t:8,h:700},{t:12,h:1100},{t:16,h:1350},{t:20,h:1400},{t:24,h:1250},{t:28,h:900},{t:32,h:500},{t:36,h:200},{t:40,h:70},{t:44,h:20}]
         },
-        {
-          key: "frankfurt",
-          name: "Frankfurt (Temsili)",
-          bins: [
-            { t: -6, h: 250 }, { t: -2, h: 450 }, { t: 2, h: 850 }, { t: 6, h: 1200 },
-            { t: 10, h: 1400 }, { t: 14, h: 1350 }, { t: 18, h: 1150 }, { t: 22, h: 800 },
-            { t: 26, h: 400 }, { t: 30, h: 180 }, { t: 34, h: 70 }, { t: 38, h: 20 },
-          ],
+        { key:"frankfurt", name:"Frankfurt (Temsili)",
+          bins:[{t:-6,h:250},{t:-2,h:450},{t:2,h:850},{t:6,h:1200},{t:10,h:1400},{t:14,h:1350},{t:18,h:1150},{t:22,h:800},{t:26,h:400},{t:30,h:180},{t:34,h:70},{t:38,h:20}]
         },
       ];
 
-      // Part-load (IPLV-benzeri) COP çarpan eğrisi: PLR -> multiplier
-      // Örnek eğri: düşük yükte COP düşer / orta yükte artar / tam yükte 1.0
-      // Bu eğriyi saha/üretici datasıyla kalibre edebilirsin.
+      // Part-load (IPLV-benzeri) COP multiplier: PLR -> multiplier (kalibrasyon placeholder)
       function partLoadMultiplier(plr) {
-        const x = clamp(plr, 0.1, 1.0);
-        // yumuşak bir "kambur": 0.5 civarı en iyi, 0.1 kötü
-        // 0.5 -> ~1.08, 1.0 -> 1.0, 0.1 -> ~0.78
-        const hump = 1.08 - 0.22 * Math.pow((x - 0.5) / 0.5, 2);
-        const lowPenalty = 0.78 + 0.22 * (x / 0.5); // 0.1..0.5 arası yükselir
-        return x <= 0.5 ? clamp(lowPenalty, 0.70, 1.10) : clamp(hump, 0.85, 1.10);
+        const x = clamp(plr, 0.10, 1.00);
+        const low = 0.72 + 0.66*x; // 0.10->0.786 ; 0.50->1.05
+        const hi  = 1.08 - 0.16*Math.pow((x-0.55)/0.45,2);
+        return x <= 0.55 ? clamp(low, 0.70, 1.12) : clamp(hi, 0.85, 1.12);
       }
 
       function estimateCOPBase({ oatC, chwSupplyC, condenserApproachC, evapApproachC, copAtRef, refLiftC, copSlopePerC, copMin, copMax }) {
@@ -168,14 +309,32 @@
         URL.revokeObjectURL(url);
       }
 
-      function InteractiveChart({ data, width=900, height=220 }) {
-        // data: [{x, y, mode, copEff, plr}]
-        const pad = 30;
+      // “Bu sayfayı HTML olarak indir” (state'i localStorage'a gömerek snapshot)
+      function downloadHTMLSnapshot(filename, state) {
+        const doc = document.documentElement.outerHTML;
+        const marker = "__TERMOLOOP_PRO_DC_SNAPSHOT__";
+        const injected = doc.replace(
+          "</head>",
+          `<script>window.${marker}=${JSON.stringify(state)};try{localStorage.setItem("${marker}",JSON.stringify(window.${marker}));}catch(e){}<\\/script></head>`
+        );
+        const blob = new Blob([injected], { type: "text/html;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function InteractiveChart({ data, title="Cooling kW vs OAT", width=900, height=240 }) {
+        const pad = 34;
         const xs = data.map(d=>d.x);
         const ys = data.map(d=>d.y);
         const xMin = Math.min(...xs), xMax = Math.max(...xs);
         const yMin = 0;
-        const yMax = Math.max(...ys) * 1.08;
+        const yMax = Math.max(...ys) * 1.10;
 
         const xScale = (x) => pad + ((x-xMin)/(xMax-xMin || 1))*(width-pad*2);
         const yScale = (y) => height-pad - ((y-yMin)/(yMax-yMin || 1))*(height-pad*2);
@@ -187,7 +346,6 @@
         const onMove = (evt) => {
           const rect = evt.currentTarget.getBoundingClientRect();
           const mx = evt.clientX - rect.left;
-          // nearest x by pixel distance
           let best = data[0], bestDx = Math.abs(xScale(best.x)-mx);
           for (const d of data) {
             const dx = Math.abs(xScale(d.x)-mx);
@@ -196,10 +354,18 @@
           setHover(best);
         };
 
-        const fcTicks = data.filter(d=>d.mode==="FC");
+        const xsFC = data.filter(d=>d.mode==="FC").map(d=>d.x);
+        const hasFC = xsFC.length>0;
+        const fcA = hasFC ? Math.min(...xsFC) : null;
+        const fcB = hasFC ? Math.max(...xsFC) : null;
+
+        const yTicks = 4;
+        const xTicks = 6;
+        const yVals = Array.from({length:yTicks+1}, (_,i)=> yMin + (i*(yMax-yMin)/yTicks));
+        const xVals = Array.from({length:xTicks+1}, (_,i)=> xMin + (i*(xMax-xMin)/xTicks));
 
         return (
-          <div style={{position:"relative"}}>
+          <div className="chartWrap">
             <svg
               width={width}
               height={height}
@@ -208,54 +374,47 @@
               onMouseLeave={()=>setHover(null)}
             >
               <rect x="0" y="0" width={width} height={height} fill="transparent" stroke="currentColor" opacity="0.12"/>
-              {/* FC bölgesini hafif band olarak göster */}
-              {fcTicks.length>0 && (
-                (() => {
-                  const xsFC = fcTicks.map(d=>d.x);
-                  const a = Math.min(...xsFC), b = Math.max(...xsFC);
-                  return (
-                    <rect x={xScale(a)} y={pad/2} width={xScale(b)-xScale(a)} height={height-pad}
-                      fill="currentColor" opacity="0.04" />
-                  );
-                })()
-              )}
-              <path d={path} fill="none" stroke="currentColor" strokeWidth="2"/>
 
-              {/* Hover noktası */}
+              {hasFC && (
+                <rect
+                  x={xScale(fcA)} y={pad/2}
+                  width={Math.max(2, xScale(fcB)-xScale(fcA))}
+                  height={height-pad}
+                  fill="currentColor" opacity="0.05"
+                />
+              )}
+
+              {yVals.map((v,i)=>(
+                <g key={"y"+i} opacity="0.12">
+                  <line x1={pad} y1={yScale(v)} x2={width-pad} y2={yScale(v)} stroke="currentColor" />
+                </g>
+              ))}
+              {xVals.map((v,i)=>(
+                <g key={"x"+i} opacity="0.10">
+                  <line x1={xScale(v)} y1={pad/2} x2={xScale(v)} y2={height-pad} stroke="currentColor" />
+                </g>
+              ))}
+
+              <path d={path} fill="none" stroke="currentColor" strokeWidth="2.2"/>
+
               {hover && (
                 <>
                   <line x1={xScale(hover.x)} y1={pad/2} x2={xScale(hover.x)} y2={height-pad}
                     stroke="currentColor" opacity="0.18" />
-                  <circle cx={xScale(hover.x)} cy={yScale(hover.y)} r="4" fill="currentColor" />
+                  <circle cx={xScale(hover.x)} cy={yScale(hover.y)} r="4.3" fill="currentColor" />
                 </>
               )}
 
-              {/* FC tick baseline */}
-              {data.filter(d=>d.mode==="FC").map((d,i)=>(
-                <line key={i} x1={xScale(d.x)} y1={height-pad} x2={xScale(d.x)} y2={height-pad-10}
-                  stroke="currentColor" strokeWidth="1" opacity="0.35" />
-              ))}
-
-              {/* Eksen etiketleri */}
-              <text x={pad} y={18} fontSize="12" opacity="0.8">kW (cooling power) vs OAT • FC band & tooltip</text>
-              <text x={pad} y={height-8} fontSize="11" opacity="0.65">{xMin}°C</text>
-              <text x={width-pad-34} y={height-8} fontSize="11" opacity="0.65">{xMax}°C</text>
+              <text x={pad} y={18} fontSize="12" opacity="0.85">{title}</text>
+              <text x={pad} y={height-8} fontSize="11" opacity="0.65">{round(xMin,0)}°C</text>
+              <text x={width-pad-38} y={height-8} fontSize="11" opacity="0.65">{round(xMax,0)}°C</text>
+              <text x={pad} y={height-pad-8} fontSize="11" opacity="0.60">FC band = kompresör off</text>
             </svg>
 
             {hover && (
-              <div style={{
-                position:"absolute",
-                left: 10,
-                top: 36,
-                background:"#fff",
-                border:"1px solid rgba(0,0,0,.14)",
-                borderRadius:12,
-                padding:"8px 10px",
-                fontSize:12,
-                boxShadow:"0 6px 18px rgba(0,0,0,.08)"
-              }}>
-                <div><b>OAT:</b> <span className="mono">{hover.x}°C</span> • <b>Mode:</b> <span className="mono">{hover.mode}</span></div>
-                <div><b>Cooling kW:</b> <span className="mono">{round(hover.y,1)}</span></div>
+              <div className="chartTip">
+                <div><b>OAT:</b> <span className="mono">{hover.x}°C</span> • <b>Mod:</b> <span className="mono">{hover.mode}</span></div>
+                <div><b>Cooling power:</b> <span className="mono">{round(hover.y,1)} kW</span></div>
                 <div><b>PLR:</b> <span className="mono">{round(hover.plr,2)}</span> • <b>COP eff:</b> <span className="mono">{round(hover.copEff,2)}</span></div>
               </div>
             )}
@@ -263,75 +422,150 @@
         );
       }
 
+      function StackedModeBar({ fcH, mechH }) {
+        const total = Math.max(1e-9, fcH + mechH);
+        const fcPct = (fcH/total)*100;
+        const mechPct = 100 - fcPct;
+        return (
+          <div style={{width:"100%"}}>
+            <div className="small" style={{display:"flex", justifyContent:"space-between", marginBottom:6}}>
+              <span>FC: <span className="mono">{round(fcH,0)} h</span></span>
+              <span>MECH: <span className="mono">{round(mechH,0)} h</span></span>
+            </div>
+            <div style={{
+              width:"100%", height:12, borderRadius:999, border:"1px solid var(--border)",
+              overflow:"hidden", display:"flex", background:"transparent"
+            }}>
+              <div style={{width:`${fcPct}%`, background:"currentColor", opacity:0.18}} />
+              <div style={{width:`${mechPct}%`, background:"currentColor", opacity:0.06}} />
+            </div>
+            <div className="small" style={{marginTop:6}}>
+              FC payı: <span className="mono">{round(fcPct,1)}%</span>
+            </div>
+          </div>
+        );
+      }
+
       function makeScenarioDefaults() {
         return {
           name: "Scenario",
-          // Loads
           itLoadkW: 1000,
           avgUtilPct: 65,
           otherFacilitykW: 60,
 
-          coolingLoadMode: "IT_MULT", // IT_MULT or FIXED
+          coolingLoadMode: "IT_MULT",
           coolingOverheadPct: 6,
           fixedCoolingkW: 850,
 
-          // Water temps
           chwSupplyC: 15,
           chwReturnC: 20,
 
           condenserApproachC: 10,
           evapApproachC: 4,
 
-          // Aux powers
           pumpPowerPct: 2.2,
           fanPowerPct: 1.4,
           hxPenaltyPct: 1.2,
 
-          // COP base model
           copAtRef: 5.2,
           refLiftC: 28,
           copSlopePerC: 0.06,
           copMin: 1.8,
           copMax: 7.5,
 
-          // Part load
           enablePartLoad: true,
-          designCoolingkW: 1200, // chiller plant nominal cooling capacity for PLR (kWth)
-          minPLR: 0.15,          // min stable plr for compressors (rough)
+          designCoolingkW: 1200,
+          minPLR: 0.15,
 
-          // Free cooling
           fcEnableC: 18,
           fcApproachC: 4.5,
           useAdiabatic: false,
           adiabaticGainC: 6,
 
-          // Climate
           climateMode: "PRESET",
           cityKey: "istanbul",
           csvText: "",
           csvHoursScale: 8760,
 
-          // Simulation
           tMin: -10, tMax: 50, tStep: 1,
 
-          // Economics
-          tariff: 0.12,           // $/kWh (örnek)
-          capexDelta: 0,          // Scenario’ya özel ek yatırım (A-B karşılaştırma)
+          tariff: 0.12,
+          capexDelta: 0,
         };
       }
 
       function validateScenario(s) {
         const warnings = [];
-        if (s.chwReturnC <= s.chwSupplyC) warnings.push("CHW Return, Supply’dan büyük olmalı (ΔT > 0).");
-        if (s.chwSupplyC < 4) warnings.push("CHW Supply çok düşük (4°C altı). FC penceresi daralır; donma/coil riski olabilir.");
-        if (s.chwSupplyC > 22) warnings.push("CHW Supply çok yüksek. IT ekipmanı/coil tasarımı uygun mu kontrol et.");
+        const fieldErr = {};
+
+        const num = (k, min=null, max=null) => {
+          const v = s[k];
+          if (!Number.isFinite(v)) { fieldErr[k] = "Sayı olmalı"; return; }
+          if (min!==null && v < min) fieldErr[k] = `≥ ${min} olmalı`;
+          if (max!==null && v > max) fieldErr[k] = `≤ ${max} olmalı`;
+        };
+
+        num("itLoadkW", 0, null);
+        num("avgUtilPct", 0, 100);
+        num("otherFacilitykW", 0, null);
+        num("coolingOverheadPct", 0, 50);
+        num("fixedCoolingkW", 0, null);
+
+        num("chwSupplyC", 2, 28);
+        num("chwReturnC", 3, 32);
+        if (s.chwReturnC <= s.chwSupplyC) {
+          warnings.push("CHW Return, Supply’dan büyük olmalı (ΔT > 0).");
+          fieldErr["chwReturnC"] = "Return > Supply olmalı";
+        }
+
+        num("fcEnableC", -30, 30);
+        num("fcApproachC", 1, 15);
         if (s.fcApproachC < 2) warnings.push("FC approach çok iyimser (<2°C). Dry cooler + HX toplam yaklaşımı genelde daha yüksek olur.");
-        if (s.condenserApproachC < 6) warnings.push("Condenser approach çok iyimser (<6°C). Seçim datasıyla doğrula.");
-        if (s.evapApproachC < 2) warnings.push("Evap approach çok iyimser (<2°C).");
-        if (s.tariff <= 0) warnings.push("Enerji birim fiyatı (tarife) 0 veya negatif olamaz.");
-        if (s.enablePartLoad && s.designCoolingkW <= 0) warnings.push("Part-load için Design Cooling kW > 0 olmalı.");
-        if (s.enablePartLoad && (s.minPLR < 0.05 || s.minPLR > 0.5)) warnings.push("Min PLR makul aralıkta olsun (0.05–0.5).");
-        return warnings;
+
+        num("condenserApproachC", 4, 20);
+        if (s.condenserApproachC < 6) warnings.push("Condenser approach iyimser (<6°C). Seçim datasıyla doğrula.");
+        num("evapApproachC", 2, 12);
+
+        num("pumpPowerPct", 0, 10);
+        num("fanPowerPct", 0, 10);
+        num("hxPenaltyPct", 0, 10);
+
+        num("copAtRef", 1.5, 12);
+        num("refLiftC", 10, 60);
+        num("copSlopePerC", 0.0, 0.3);
+        num("copMin", 0.8, 6);
+        num("copMax", 2, 20);
+        if (s.copMax < s.copMin) {
+          warnings.push("COP max, COP min’den küçük olamaz.");
+          fieldErr["copMax"] = "COP max ≥ COP min";
+        }
+
+        if (s.enablePartLoad) {
+          num("designCoolingkW", 1, null);
+          num("minPLR", 0.05, 0.6);
+        }
+
+        num("tariff", 0.00001, null);
+        num("capexDelta", 0, null);
+
+        num("tMin", -50, 30);
+        num("tMax", 0, 70);
+        num("tStep", 0.25, 10);
+        if (s.tMax <= s.tMin) {
+          warnings.push("Simülasyon aralığı hatalı: Tmax, Tmin’den büyük olmalı.");
+          fieldErr["tMax"] = "Tmax > Tmin";
+        }
+
+        if (s.climateMode==="CSV") {
+          const n = parseCSVTemps(s.csvText).length;
+          if (n < 24) warnings.push("CSV sıcaklık sayısı çok az. En az birkaç gün (örn. 72–168) önerilir.");
+          if (n === 0) fieldErr["csvText"] = "CSV boş";
+        }
+
+        if (s.chwSupplyC < 4) warnings.push("CHW Supply çok düşük (4°C altı). FC penceresi daralır; donma/coil riski olabilir.");
+        if (s.chwSupplyC > 22) warnings.push("CHW Supply yüksek. IT ekipmanı/coil tasarımı uygun mu kontrol et.");
+
+        return { warnings, fieldErr };
       }
 
       function computeAnnual(s) {
@@ -349,7 +583,7 @@
           return { type:"csv", name:"CSV", temps: parseCSVTemps(s.csvText) };
         })();
 
-        const pointAtTemp = (oatC) => {
+        const pointAtTemp = (oatC, hours) => {
           const mode = modeAtOAT({
             oatC,
             chwSupplyC: s.chwSupplyC,
@@ -371,7 +605,7 @@
             const fan  = (s.fanPowerPct/100) * coolingLoadkW;
             const hx   = (s.hxPenaltyPct/100) * coolingLoadkW;
             kWcool = pump + fan + hx;
-            copEff = Infinity;
+            copEff = 999;
           } else {
             const base = estimateCOPBase({
               oatC,
@@ -386,24 +620,26 @@
             });
             const copEffLocal = base.cop * plMult;
             copEff = copEffLocal;
-            const compressor = coolingLoadkW / Math.max(0.1, copEffLocal);
+
+            const compressor = coolingLoadkW / Math.max(0.10, copEffLocal);
             const pump = (s.pumpPowerPct/100) * coolingLoadkW;
             const fan  = (s.fanPowerPct/100) * coolingLoadkW;
             kWcool = compressor + pump + fan;
           }
 
-          return { mode, plr, copEff: Number.isFinite(copEff) ? copEff : 999, kWcool };
+          const Ptotal = itAvgkW + kWcool + s.otherFacilitykW;
+
+          return { oatC, hours, mode, plr, copEff, kWcool, Ptotal };
         };
 
-        // Curve for chart
-        const curve = [];
+        const curveKW = [];
+        const curveCOP = [];
         for (let t=s.tMin; t<=s.tMax; t+=s.tStep) {
-          const p = pointAtTemp(t);
-          curve.push({ x: t, y: p.kWcool, mode: p.mode, copEff: p.copEff, plr: p.plr });
+          const p = pointAtTemp(t, 1);
+          curveKW.push({ x: t, y: p.kWcool, mode: p.mode, copEff: p.copEff, plr: p.plr });
+          curveCOP.push({ x: t, y: p.copEff, mode: p.mode, copEff: p.copEff, plr: p.plr });
         }
 
-        // Annual aggregation
-        const itAvgkW = s.itLoadkW * (s.avgUtilPct/100);
         let totalHours = 0, fcHours = 0, mechHours = 0;
         let E_total = 0, E_it = 0, E_cool = 0;
 
@@ -411,13 +647,10 @@
 
         if (profile.type==="bins") {
           for (const b of profile.bins) {
-            const p = pointAtTemp(b.t);
+            const p = pointAtTemp(b.t, b.h);
             totalHours += b.h;
             if (p.mode==="FC") fcHours += b.h; else mechHours += b.h;
-
-            const Ptotal = itAvgkW + p.kWcool + s.otherFacilitykW;
-
-            E_total += Ptotal * b.h;
+            E_total += p.Ptotal * b.h;
             E_it    += itAvgkW * b.h;
             E_cool  += p.kWcool * b.h;
           }
@@ -433,13 +666,10 @@
           if (n>0) {
             const scale = s.csvHoursScale / n;
             for (let i=0; i<n; i++) {
-              const p = pointAtTemp(temps[i]);
+              const p = pointAtTemp(temps[i], 1);
               totalHours += scale;
               if (p.mode==="FC") fcHours += scale; else mechHours += scale;
-
-              const Ptotal = itAvgkW + p.kWcool + s.otherFacilitykW;
-
-              E_total += Ptotal * scale;
+              E_total += p.Ptotal * scale;
               E_it    += itAvgkW * scale;
               E_cool  += p.kWcool * scale;
             }
@@ -454,7 +684,6 @@
 
         const pue = E_total / Math.max(1e-9, E_it);
         const costTotal = E_total * s.tariff;
-        const costCooling = E_cool * s.tariff;
 
         return {
           itAvgkW,
@@ -464,262 +693,302 @@
           fcSharePct: (fcHours / Math.max(1, totalHours)) * 100,
           E_total, E_it, E_cool,
           pue,
-          costTotal, costCooling,
-          curve,
+          costTotal,
+          curveKW,
+          curveCOP,
           monthly,
         };
       }
 
+      function Field({label, tip, children}) {
+        return (
+          <div>
+            <div className="label">
+              <span>{label}</span>
+              {tip ? <span className="tooltipDot" title={tip}>i</span> : null}
+            </div>
+            {children}
+          </div>
+        );
+      }
+
       function ScenarioEditor({ s, setS, compact=false }) {
-        const w = validateScenario(s);
-
-        const Info = ({text}) => (<span className="tooltip" title={text}>i</span>);
-
+        const { warnings, fieldErr } = validateScenario(s);
         const set = (k, v) => setS({ ...s, [k]: v });
+
+        const numInput = (k, opts={}) => {
+          const { step, disabled } = opts;
+          const bad = Boolean(fieldErr[k]);
+          return (
+            <div>
+              <input
+                className={bad ? "isBad" : ""}
+                type="number"
+                step={step}
+                value={s[k]}
+                disabled={disabled}
+                onChange={(e)=>set(k, safeNum(e.target.value, 0))}
+              />
+              {bad ? <div className="fieldErr">{fieldErr[k]}</div> : null}
+            </div>
+          );
+        };
 
         return (
           <div>
-            {w.length>0 ? (
+            {warnings.length>0 ? (
               <div className="warn" style={{marginBottom:10}}>
-                <div style={{fontWeight:900, marginBottom:6}}>Uyarılar</div>
+                <div style={{fontWeight:950, marginBottom:6}}>Validasyon & Uyarılar</div>
                 <ul style={{margin:0, paddingLeft:18}}>
-                  {w.map((x,i)=><li key={i}>{x}</li>)}
+                  {warnings.map((x,i)=><li key={i}>{x}</li>)}
                 </ul>
+                <div className="small" style={{marginTop:6}}>
+                  Bu araç “konsept analiz” içindir. Üretici selection datası + hidronik/dispatch detaylarıyla kalibre edilmelidir.
+                </div>
               </div>
             ) : (
               <div className="ok" style={{marginBottom:10}}>
-                <div style={{fontWeight:900}}>Girdi kontrolleri: OK</div>
+                <div style={{fontWeight:950}}>Girdi kontrolleri: OK</div>
                 <div className="small">Model varsayımsal; üretici datası ile kalibre edince çok güçlenir.</div>
               </div>
             )}
 
             <div className="grid">
-              <div className={compact ? "card12" : "card"}>
-                <div className="title">Yükler <Info text="IT ortalama yük + soğutma overhead veya sabit soğutma kW."/></div>
-                <div className="row">
-                  <div>
-                    <div className="label">IT Kurulu Güç (kW)</div>
-                    <input type="number" value={s.itLoadkW} onChange={e=>set("itLoadkW", Number(e.target.value))}/>
-                  </div>
-                  <div>
-                    <div className="label">Avg Util (%)</div>
-                    <input type="number" value={s.avgUtilPct} onChange={e=>set("avgUtilPct", Number(e.target.value))}/>
-                  </div>
+              <div className={(compact ? "card12 card" : "card")}>
+                <div className="title">
+                  <div className="titleLeft">Yükler</div>
+                  <div className="hint">IT avg + cooling overhead</div>
                 </div>
+
                 <div className="row">
-                  <div>
-                    <div className="label">Diğer Tesis (kW)</div>
-                    <input type="number" value={s.otherFacilitykW} onChange={e=>set("otherFacilitykW", Number(e.target.value))}/>
-                  </div>
-                  <div>
-                    <div className="label">Soğutma Modeli</div>
-                    <select value={s.coolingLoadMode} onChange={e=>set("coolingLoadMode", e.target.value)}>
+                  <Field label="IT Kurulu Güç (kW)" tip="Toplam IT nameplate. Ortalama = Util% ile hesaplanır.">
+                    {numInput("itLoadkW")}
+                  </Field>
+                  <Field label="Avg Util (%)" tip="Yıllık ortalama IT kullanım oranı.">
+                    {numInput("avgUtilPct")}
+                  </Field>
+                </div>
+
+                <div className="row">
+                  <Field label="Diğer Tesis (kW)" tip="Aydınlatma, UPS kayıpları, ofis vb. sabit/ortalama.">
+                    {numInput("otherFacilitykW")}
+                  </Field>
+                  <Field label="Soğutma Modeli" tip="Soğutma yükünü IT’e bağlı (overhead) veya sabit al.">
+                    <select value={s.coolingLoadMode} onChange={(e)=>set("coolingLoadMode", e.target.value)}>
                       <option value="IT_MULT">IT’e bağlı</option>
                       <option value="FIXED">Sabit</option>
                     </select>
-                  </div>
+                  </Field>
                 </div>
+
                 {s.coolingLoadMode==="IT_MULT" ? (
                   <div className="row">
-                    <div>
-                      <div className="label">Cooling Overhead (%)</div>
-                      <input type="number" value={s.coolingOverheadPct} onChange={e=>set("coolingOverheadPct", Number(e.target.value))}/>
-                      <div className="small">IT üstüne ek ısı.</div>
-                    </div>
-                    <div>
-                      <div className="label">Fixed Cooling (kW)</div>
-                      <input type="number" value={s.fixedCoolingkW} disabled />
-                    </div>
+                    <Field label="Cooling Overhead (%)" tip="IT üstüne ek ısı (fanlar, power, kaçaklar).">
+                      {numInput("coolingOverheadPct")}
+                      <div className="small">Soğutma yükü = ITavg × (1 + overhead).</div>
+                    </Field>
+                    <Field label="Fixed Cooling (kW)" tip="Sabit soğutma seçili değilse kilitli.">
+                      {numInput("fixedCoolingkW", {disabled:true})}
+                    </Field>
                   </div>
                 ) : (
                   <div className="row">
-                    <div>
-                      <div className="label">Fixed Cooling (kW)</div>
-                      <input type="number" value={s.fixedCoolingkW} onChange={e=>set("fixedCoolingkW", Number(e.target.value))}/>
-                    </div>
-                    <div>
-                      <div className="label">Overhead (%)</div>
-                      <input type="number" value={s.coolingOverheadPct} disabled />
-                    </div>
+                    <Field label="Fixed Cooling (kW)" tip="Sabit soğutma yükü (kWth).">
+                      {numInput("fixedCoolingkW")}
+                    </Field>
+                    <Field label="Overhead (%)" tip="IT’e bağlı değilse kilitli.">
+                      {numInput("coolingOverheadPct", {disabled:true})}
+                    </Field>
                   </div>
                 )}
               </div>
 
-              <div className={compact ? "card12" : "card"}>
-                <div className="title">Su Sıcaklıkları <Info text="ASHRAE sınıfı / coil tasarımı ile uyumlu supply/return seç."/></div>
-                <div className="row">
-                  <div>
-                    <div className="label">CHW Supply (°C)</div>
-                    <input type="number" value={s.chwSupplyC} onChange={e=>set("chwSupplyC", Number(e.target.value))}/>
-                  </div>
-                  <div>
-                    <div className="label">CHW Return (°C)</div>
-                    <input type="number" value={s.chwReturnC} onChange={e=>set("chwReturnC", Number(e.target.value))}/>
-                  </div>
+              <div className={(compact ? "card12 card" : "card")}>
+                <div className="title">
+                  <div className="titleLeft">Su Sıcaklıkları</div>
+                  <div className="hint">Supply/Return</div>
                 </div>
+
                 <div className="row">
-                  <div>
-                    <div className="label">Evap Approach (°C)</div>
-                    <input type="number" value={s.evapApproachC} onChange={e=>set("evapApproachC", Number(e.target.value))}/>
-                  </div>
-                  <div>
-                    <div className="label">Cond. Approach (°C)</div>
-                    <input type="number" value={s.condenserApproachC} onChange={e=>set("condenserApproachC", Number(e.target.value))}/>
-                  </div>
+                  <Field label="CHW Supply (°C)" tip="Yüksek supply (örn 15°C) free cooling penceresini büyütür.">
+                    {numInput("chwSupplyC")}
+                  </Field>
+                  <Field label="CHW Return (°C)" tip="Return > Supply olmalı. ΔT düşükse pompa/coil etkilenir.">
+                    {numInput("chwReturnC")}
+                  </Field>
+                </div>
+
+                <div className="row">
+                  <Field label="Evap Approach (°C)" tip="Evaporatör yaklaşımı (coil/evap + kontrol).">
+                    {numInput("evapApproachC")}
+                  </Field>
+                  <Field label="Cond. Approach (°C)" tip="Kondenser yaklaşımı (dry cooler/CT + HX).">
+                    {numInput("condenserApproachC")}
+                  </Field>
                 </div>
               </div>
 
-              <div className={compact ? "card12" : "card"}>
-                <div className="title">Free Cooling <Info text="FC enable eşiği + termodinamik koşul (OAT + approach ≤ CHW)."/></div>
-                <div className="row">
-                  <div>
-                    <div className="label">FC Enable (OAT ≤ …) °C</div>
-                    <input type="number" value={s.fcEnableC} onChange={e=>set("fcEnableC", Number(e.target.value))}/>
-                  </div>
-                  <div>
-                    <div className="label">FC Approach (°C)</div>
-                    <input type="number" value={s.fcApproachC} onChange={e=>set("fcApproachC", Number(e.target.value))}/>
-                  </div>
+              <div className={(compact ? "card12 card" : "card")}>
+                <div className="title">
+                  <div className="titleLeft">Free Cooling</div>
+                  <div className="hint">FC band</div>
                 </div>
+
                 <div className="row">
-                  <div>
-                    <div className="label">Adiabatic</div>
-                    <select value={s.useAdiabatic ? "YES":"NO"} onChange={e=>set("useAdiabatic", e.target.value==="YES")}>
+                  <Field label="FC Enable (OAT ≤ …) °C" tip="Operasyonel eşik (kontrol mantığı).">
+                    {numInput("fcEnableC")}
+                  </Field>
+                  <Field label="FC Approach (°C)" tip="Dry cooler + plate HX toplam yaklaşım.">
+                    {numInput("fcApproachC")}
+                  </Field>
+                </div>
+
+                <div className="row">
+                  <Field label="Adiabatic" tip="Adiabatic kullanılırsa efektif OAT düşer (basitleştirilmiş).">
+                    <select value={s.useAdiabatic ? "YES":"NO"} onChange={(e)=>set("useAdiabatic", e.target.value==="YES")}>
                       <option value="NO">Yok</option>
                       <option value="YES">Var</option>
                     </select>
-                  </div>
-                  <div>
-                    <div className="label">Adiabatic Gain (°C)</div>
-                    <input type="number" value={s.adiabaticGainC} disabled={!s.useAdiabatic} onChange={e=>set("adiabaticGainC", Number(e.target.value))}/>
-                  </div>
+                  </Field>
+                  <Field label="Adiabatic Gain (°C)" tip="Temsili OAT düşüşü. Gerçekte RH/DB/WB bağlıdır.">
+                    {numInput("adiabaticGainC", {disabled: !s.useAdiabatic})}
+                  </Field>
                 </div>
               </div>
 
-              <div className={compact ? "card12" : "card"}>
-                <div className="title">Part-Load & COP <Info text="IPLV-benzeri PLR çarpanı ile efektif COP hesaplanır."/></div>
+              <div className={(compact ? "card12 card" : "card")}>
+                <div className="title">
+                  <div className="titleLeft">Part‑Load & COP</div>
+                  <div className="hint">IPLV‑benzeri</div>
+                </div>
+
                 <div className="row">
-                  <div>
-                    <div className="label">Part-Load aktif</div>
-                    <select value={s.enablePartLoad ? "YES":"NO"} onChange={e=>set("enablePartLoad", e.target.value==="YES")}>
+                  <Field label="Part‑Load aktif" tip="PLR = Load/Design. COPeff = COPbase × multiplier.">
+                    <select value={s.enablePartLoad ? "YES":"NO"} onChange={(e)=>set("enablePartLoad", e.target.value==="YES")}>
                       <option value="YES">Evet</option>
                       <option value="NO">Hayır</option>
                     </select>
-                    <div className="small">Evet ise PLR = Load / DesignCapacity.</div>
-                  </div>
-                  <div>
-                    <div className="label">Design Cooling (kWth)</div>
-                    <input type="number" value={s.designCoolingkW} onChange={e=>set("designCoolingkW", Number(e.target.value))}/>
-                  </div>
+                    <div className="small">Aktifse düşük yükte verim “multiplier” ile modellenir.</div>
+                  </Field>
+                  <Field label="Design Cooling (kWth)" tip="Chiller plant nominal kapasite (PLR için).">
+                    {numInput("designCoolingkW")}
+                  </Field>
                 </div>
+
                 <div className="row">
-                  <div>
-                    <div className="label">Min PLR</div>
-                    <input type="number" step="0.01" value={s.minPLR} onChange={e=>set("minPLR", Number(e.target.value))}/>
-                  </div>
-                  <div>
-                    <div className="label">COP@Ref</div>
-                    <input type="number" step="0.1" value={s.copAtRef} onChange={e=>set("copAtRef", Number(e.target.value))}/>
-                  </div>
+                  <Field label="Min PLR" tip="Minimum stabil çalışma (temsilidir).">
+                    {numInput("minPLR", {step:"0.01"})}
+                  </Field>
+                  <Field label="COP@Ref" tip="Referans lift’te COP.">
+                    {numInput("copAtRef", {step:"0.1"})}
+                  </Field>
                 </div>
+
                 <div className="row">
-                  <div>
-                    <div className="label">Ref Lift (°C)</div>
-                    <input type="number" value={s.refLiftC} onChange={e=>set("refLiftC", Number(e.target.value))}/>
-                  </div>
-                  <div>
-                    <div className="label">COP slope /°C</div>
-                    <input type="number" step="0.01" value={s.copSlopePerC} onChange={e=>set("copSlopePerC", Number(e.target.value))}/>
+                  <Field label="Ref Lift (°C)" tip="Referans sıcaklık kaldırma (Tcond-Tevap).">
+                    {numInput("refLiftC")}
+                  </Field>
+                  <Field label="COP slope /°C" tip="Lift artınca COP düşüş eğimi.">
+                    {numInput("copSlopePerC", {step:"0.01"})}
+                  </Field>
+                </div>
+
+                <div className="row">
+                  <Field label="COP min" tip="Model alt sınırı.">
+                    {numInput("copMin", {step:"0.1"})}
+                  </Field>
+                  <Field label="COP max" tip="Model üst sınırı.">
+                    {numInput("copMax", {step:"0.1"})}
+                  </Field>
+                </div>
+              </div>
+
+              <div className={(compact ? "card12 card" : "card")}>
+                <div className="title">
+                  <div className="titleLeft">Yardımcılar & Ekonomi</div>
+                  <div className="hint">tarife + payback</div>
+                </div>
+
+                <div className="row">
+                  <Field label="Pompa (% load)" tip="Pompa gücünü soğutma yüküne oranla yaklaşıkla.">
+                    {numInput("pumpPowerPct")}
+                  </Field>
+                  <Field label="Fan (% load)" tip="Dry cooler fan gücü ~ load’a oran. (basit yaklaşım)">
+                    {numInput("fanPowerPct")}
+                  </Field>
+                </div>
+
+                <div className="row">
+                  <Field label="FC HX cezası (% load)" tip="Free cooling’de ek HX kaybı + pompa ihtiyacı.">
+                    {numInput("hxPenaltyPct")}
+                  </Field>
+                  <Field label="Tarife ($/kWh)" tip="Enerji birim maliyeti.">
+                    {numInput("tariff", {step:"0.01"})}
+                  </Field>
+                </div>
+
+                <div className="row">
+                  <Field label="CAPEX farkı ($)" tip="Senaryoya özel ek yatırım (adiabatic, daha büyük coil vb.).">
+                    {numInput("capexDelta")}
+                    <div className="small">Payback, A-B CAPEX farkı / yıllık tasarruf ile hesaplanır.</div>
+                  </Field>
+                  <div className="panel">
+                    <div style={{fontWeight:950, marginBottom:6}}>Hızlı Not</div>
+                    <div className="small">Gerçek projede: N+1, min akış, VFD eğrileri, kule/dry‑cooler selection, pompaj head, ΔT ve işletme stratejisi eklenmeli.</div>
                   </div>
                 </div>
               </div>
 
-              <div className={compact ? "card12" : "card"}>
-                <div className="title">Yardımcılar & Ekonomi <Info text="Pompa/fan HX cezaları + tarife + capex farkı geri ödeme."/></div>
-                <div className="row">
-                  <div>
-                    <div className="label">Pompa (% load)</div>
-                    <input type="number" value={s.pumpPowerPct} onChange={e=>set("pumpPowerPct", Number(e.target.value))}/>
-                  </div>
-                  <div>
-                    <div className="label">Fan (% load)</div>
-                    <input type="number" value={s.fanPowerPct} onChange={e=>set("fanPowerPct", Number(e.target.value))}/>
-                  </div>
+              <div className="card12 card">
+                <div className="title">
+                  <div className="titleLeft">İklim & Simülasyon</div>
+                  <div className="hint">preset / csv</div>
                 </div>
-                <div className="row">
-                  <div>
-                    <div className="label">FC HX cezası (% load)</div>
-                    <input type="number" value={s.hxPenaltyPct} onChange={e=>set("hxPenaltyPct", Number(e.target.value))}/>
-                  </div>
-                  <div>
-                    <div className="label">Tarife ($/kWh)</div>
-                    <input type="number" step="0.01" value={s.tariff} onChange={e=>set("tariff", Number(e.target.value))}/>
-                  </div>
-                </div>
-                <div className="row">
-                  <div>
-                    <div className="label">CAPEX farkı ($)</div>
-                    <input type="number" value={s.capexDelta} onChange={e=>set("capexDelta", Number(e.target.value))}/>
-                    <div className="small">Örn: adiabatic ek yatırım / daha büyük dry cooler.</div>
-                  </div>
-                  <div>
-                    <div className="label">Kompresör COP min/max</div>
-                    <div className="row3">
-                      <input type="number" step="0.1" value={s.copMin} onChange={e=>set("copMin", Number(e.target.value))}/>
-                      <input type="number" step="0.1" value={s.copMax} onChange={e=>set("copMax", Number(e.target.value))}/>
-                      <input type="number" value={s.evapApproachC} disabled />
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div className="card12">
-                <div className="title">İklim & Simülasyon <Info text="Preset bin veya CSV saatlik sıcaklık; eğri aralığı -10..50."/></div>
                 <div className="row">
-                  <div>
-                    <div className="label">İklim Modu</div>
-                    <select value={s.climateMode} onChange={e=>set("climateMode", e.target.value)}>
+                  <Field label="İklim Modu" tip="Şehir binleri (temsili) veya CSV saatlik sıcaklıklar.">
+                    <select value={s.climateMode} onChange={(e)=>set("climateMode", e.target.value)}>
                       <option value="PRESET">Şehir preset (temsili)</option>
                       <option value="CSV">CSV/saatlik yapıştır</option>
                     </select>
-                  </div>
-                  <div>
-                    <div className="label">Aralık (Tmin/Tmax/Step)</div>
-                    <div className="row3">
-                      <input type="number" value={s.tMin} onChange={e=>set("tMin", Number(e.target.value))}/>
-                      <input type="number" value={s.tMax} onChange={e=>set("tMax", Number(e.target.value))}/>
-                      <input type="number" value={s.tStep} onChange={e=>set("tStep", Number(e.target.value))}/>
+                  </Field>
+                  <Field label="Aralık (Tmin/Tmax/Step)" tip="Grafikler için OAT sweep aralığı.">
+                    <div className="row3" style={{marginBottom:0}}>
+                      {numInput("tMin")}
+                      {numInput("tMax")}
+                      {numInput("tStep")}
                     </div>
-                  </div>
+                  </Field>
                 </div>
 
                 {s.climateMode==="PRESET" ? (
                   <div className="row">
-                    <div>
-                      <div className="label">Şehir</div>
-                      <select value={s.cityKey} onChange={e=>set("cityKey", e.target.value)}>
+                    <Field label="Şehir" tip="Temsili saat dağılımı. Gerçek proje için CSV önerilir.">
+                      <select value={s.cityKey} onChange={(e)=>set("cityKey", e.target.value)}>
                         {CITY_PROFILES.map(c=><option key={c.key} value={c.key}>{c.name}</option>)}
                       </select>
-                      <div className="small">Preset temsili; gerçek proje için CSV önerilir.</div>
-                    </div>
-                    <div>
-                      <div className="label">CSV saat ölçeği</div>
-                      <input type="number" value={s.csvHoursScale} disabled />
-                    </div>
+                      <div className="small">Preset temsili; gerçek meteoroloji değildir.</div>
+                    </Field>
+                    <Field label="CSV saat ölçeği" tip="Preset modda kullanılmaz.">
+                      {numInput("csvHoursScale", {disabled:true})}
+                    </Field>
                   </div>
                 ) : (
                   <div className="row">
-                    <div>
-                      <div className="label">CSV Sıcaklıklar</div>
-                      <textarea value={s.csvText} onChange={e=>set("csvText", e.target.value)} placeholder={"12.3\\n11.8\\n... veya: 2025-01-01, 8.2"} />
-                      <div className="small">Sadece sayıları ayıklar. (Tarih/saat yazsan da olur.)</div>
-                    </div>
-                    <div>
-                      <div className="label">Saat hedefi (8760)</div>
-                      <input type="number" value={s.csvHoursScale} onChange={e=>set("csvHoursScale", Number(e.target.value))}/>
-                      <div className="small">CSV satır sayısı 8760 değilse ölçekler.</div>
+                    <Field label="CSV Sıcaklıklar" tip="Sayısal değerleri ayıklar. Tarih/saat içerse de olur.">
+                      <textarea
+                        className={fieldErr["csvText"] ? "isBad" : ""}
+                        value={s.csvText}
+                        onChange={(e)=>set("csvText", e.target.value)}
+                        placeholder={"12.3\\n11.8\\n... veya: 2025-01-01, 8.2"}
+                      />
+                      {fieldErr["csvText"] ? <div className="fieldErr">{fieldErr["csvText"]}</div> : null}
+                      <div className="small">Timestamp’li veri ile gerçek aylık breakdown yapılabilir.</div>
+                    </Field>
+                    <Field label="Saat hedefi (8760)" tip="CSV satır sayısı 8760 değilse ölçeklenir.">
+                      {numInput("csvHoursScale")}
                       <div className="pill" style={{marginTop:10}}>Algılanan: <span className="mono">{parseCSVTemps(s.csvText).length}</span></div>
-                    </div>
+                    </Field>
                   </div>
                 )}
               </div>
@@ -734,21 +1003,21 @@
             <table style={{width:"100%", borderCollapse:"collapse", fontSize:12}}>
               <thead>
                 <tr style={{textAlign:"left"}}>
-                  <th style={{padding:"8px 6px", borderBottom:"1px solid rgba(0,0,0,.12)"}}>Ay</th>
-                  <th style={{padding:"8px 6px", borderBottom:"1px solid rgba(0,0,0,.12)"}} className="right">Cooling (MWh)</th>
-                  <th style={{padding:"8px 6px", borderBottom:"1px solid rgba(0,0,0,.12)"}} className="right">Total (MWh)</th>
-                  <th style={{padding:"8px 6px", borderBottom:"1px solid rgba(0,0,0,.12)"}} className="right">FC saat</th>
-                  <th style={{padding:"8px 6px", borderBottom:"1px solid rgba(0,0,0,.12)"}} className="right">Mech saat</th>
+                  <th style={{padding:"8px 6px", borderBottom:"1px solid var(--border)"}}>Ay</th>
+                  <th style={{padding:"8px 6px", borderBottom:"1px solid var(--border)"}} className="right">Cooling (MWh)</th>
+                  <th style={{padding:"8px 6px", borderBottom:"1px solid var(--border)"}} className="right">Total (MWh)</th>
+                  <th style={{padding:"8px 6px", borderBottom:"1px solid var(--border)"}} className="right">FC saat</th>
+                  <th style={{padding:"8px 6px", borderBottom:"1px solid var(--border)"}} className="right">Mech saat</th>
                 </tr>
               </thead>
               <tbody>
                 {rows.map((r,i)=>(
                   <tr key={i}>
-                    <td style={{padding:"8px 6px", borderBottom:"1px solid rgba(0,0,0,.08)"}}><b>{r.m}</b></td>
-                    <td style={{padding:"8px 6px", borderBottom:"1px solid rgba(0,0,0,.08)"}} className="right">{round(r.E_cool/1000,1)}</td>
-                    <td style={{padding:"8px 6px", borderBottom:"1px solid rgba(0,0,0,.08)"}} className="right">{round(r.E_total/1000,1)}</td>
-                    <td style={{padding:"8px 6px", borderBottom:"1px solid rgba(0,0,0,.08)"}} className="right">{round(r.fcH,0)}</td>
-                    <td style={{padding:"8px 6px", borderBottom:"1px solid rgba(0,0,0,.08)"}} className="right">{round(r.mechH,0)}</td>
+                    <td style={{padding:"8px 6px", borderBottom:"1px solid var(--border)"}}><b>{r.m}</b></td>
+                    <td style={{padding:"8px 6px", borderBottom:"1px solid var(--border)"}} className="right">{round(r.E_cool/1000,1)}</td>
+                    <td style={{padding:"8px 6px", borderBottom:"1px solid var(--border)"}} className="right">{round(r.E_total/1000,1)}</td>
+                    <td style={{padding:"8px 6px", borderBottom:"1px solid var(--border)"}} className="right">{round(r.fcH,0)}</td>
+                    <td style={{padding:"8px 6px", borderBottom:"1px solid var(--border)"}} className="right">{round(r.mechH,0)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -759,14 +1028,27 @@
 
       function App() {
         const [tab, setTab] = useState("compare");
+        const marker = "__TERMOLOOP_PRO_DC_SNAPSHOT__";
 
-        const [A, setA] = useState({ ...makeScenarioDefaults(), name: "Senaryo A" });
-        const [B, setB] = useState({ ...makeScenarioDefaults(), name: "Senaryo B", useAdiabatic: true, capexDelta: 25000 });
+        const fromLS = (() => {
+          try{
+            const raw = localStorage.getItem(marker);
+            if(!raw) return null;
+            return JSON.parse(raw);
+          }catch(e){ return null; }
+        })();
+
+        const [A, setA] = useState(fromLS?.A ? fromLS.A : ({ ...makeScenarioDefaults(), name:"Senaryo A" }));
+        const [B, setB] = useState(fromLS?.B ? fromLS.B : ({ ...makeScenarioDefaults(), name:"Senaryo B", useAdiabatic:true, capexDelta: 25000 }));
 
         const [ioText, setIoText] = useState("");
 
         const resA = useMemo(()=>computeAnnual(A), [A]);
         const resB = useMemo(()=>computeAnnual(B), [B]);
+
+        useMemo(()=>{
+          try{ localStorage.setItem(marker, JSON.stringify({A,B})); }catch(e){}
+        }, [A,B]);
 
         const savingsTotal = resA.costTotal - resB.costTotal;
         const capexDiff = (B.capexDelta - A.capexDelta);
@@ -779,7 +1061,8 @@
           </div>
         );
 
-        const exportAll = () => downloadJSON("dc-cooling-pro-scenarios.json", { A, B });
+        const exportAll = () => downloadJSON("termoloop-pro-dc-scenarios.json", { A, B });
+        const copyExportText = () => setIoText(JSON.stringify({ A, B }, null, 2));
 
         const importAll = () => {
           try {
@@ -792,14 +1075,28 @@
           }
         };
 
-        const copyExportText = () => setIoText(JSON.stringify({ A, B }, null, 2));
+        const resetDefaults = () => {
+          if (!confirm("A ve B senaryoları varsayılanlara dönsün mü?")) return;
+          setA({ ...makeScenarioDefaults(), name:"Senaryo A" });
+          setB({ ...makeScenarioDefaults(), name:"Senaryo B", useAdiabatic:true, capexDelta: 25000 });
+        };
+
+        const downloadThisHTML = () => downloadHTMLSnapshot("termoloop-pro-dc.html", {A,B});
 
         return (
           <div className="wrap">
-            <div className="header">
+            <div className="topbar">
               <div>
-                <h1>DC Cooling Pro — PUE • Free Cooling • Part-Load • Scenario Compare</h1>
-                <div className="sub">Tek dosya “artifact” formatı: CDN React + Babel. (Import yok, npm yok.)</div>
+                <div className="brandRow">
+                  <div className="logo" aria-hidden="true"></div>
+                  <div>
+                    <h1>TermoLoop Pro DC — PUE • Free Cooling • Part‑Load • Scenario Compare</h1>
+                    <div className="sub">
+                      Tek dosya <span className="mono">index.html</span> (Cloudflare Pages uyumlu).
+                      Ayarlar otomatik kaydedilir; istersen “HTML indir” ile snapshot alabilirsin.
+                    </div>
+                  </div>
+                </div>
               </div>
               {topBadge}
             </div>
@@ -808,15 +1105,24 @@
               <button className={"tabBtn "+(tab==="compare"?"active":"")} onClick={()=>setTab("compare")}>Karşılaştır</button>
               <button className={"tabBtn "+(tab==="scenarioA"?"active":"")} onClick={()=>setTab("scenarioA")}>Senaryo A</button>
               <button className={"tabBtn "+(tab==="scenarioB"?"active":"")} onClick={()=>setTab("scenarioB")}>Senaryo B</button>
-              <button className={"tabBtn "+(tab==="io"?"active":"")} onClick={()=>setTab("io")}>Import / Export</button>
+              <button className={"tabBtn "+(tab==="io"?"active":"")} onClick={()=>setTab("io")}>Export / Import</button>
               <button className={"tabBtn "+(tab==="report"?"active":"")} onClick={()=>setTab("report")}>Rapor</button>
             </div>
 
             {tab==="compare" && (
               <div className="grid">
-                <div className="card12">
+                <div className="card12 card">
                   <div className="title">
-                    KPI Karşılaştırma <span className="pill">A: {resA.profileName}</span> <span className="pill">B: {resB.profileName}</span>
+                    <div className="titleLeft">
+                      KPI Karşılaştırma
+                      <span className="pill">A: {resA.profileName}</span>
+                      <span className="pill">B: {resB.profileName}</span>
+                    </div>
+                    <div className="btnRow">
+                      <button className="btn" onClick={downloadThisHTML} title="Mevcut ayarlarla tek dosya HTML indir">HTML indir</button>
+                      <button className="btn" onClick={exportAll} title="A+B JSON indir">JSON indir</button>
+                      <button className="btn danger" onClick={resetDefaults} title="Varsayılanlara dön">Reset</button>
+                    </div>
                   </div>
 
                   <div className="kpiGrid">
@@ -825,16 +1131,19 @@
                       <div className="kpiVal">{round(resA.pue,3)} → {round(resB.pue,3)}</div>
                       <div className="small">Düşüş: <span className="mono">{round(resA.pue-resB.pue,3)}</span></div>
                     </div>
+
                     <div className="kpi">
                       <div className="kpiLbl">Yıllık Toplam Enerji</div>
                       <div className="kpiVal">{round(resA.E_total/1000,1)} → {round(resB.E_total/1000,1)} MWh</div>
                       <div className="small">Δ: <span className="mono">{round((resA.E_total-resB.E_total)/1000,1)} MWh</span></div>
                     </div>
+
                     <div className="kpi">
                       <div className="kpiLbl">Soğutma Enerjisi</div>
                       <div className="kpiVal">{round(resA.E_cool/1000,1)} → {round(resB.E_cool/1000,1)} MWh</div>
                       <div className="small">Δ: <span className="mono">{round((resA.E_cool-resB.E_cool)/1000,1)} MWh</span></div>
                     </div>
+
                     <div className="kpi">
                       <div className="kpiLbl">FC Payı</div>
                       <div className="kpiVal">{round(resA.fcSharePct,1)}% → {round(resB.fcSharePct,1)}%</div>
@@ -848,48 +1157,93 @@
                       <div className="kpiVal">${round(resA.costTotal,0)} → ${round(resB.costTotal,0)}</div>
                       <div className="small">Tasarruf (B): <span className="mono">${round(savingsTotal,0)}/yıl</span></div>
                     </div>
+
                     <div className="kpi">
                       <div className="kpiLbl">Basit Geri Ödeme</div>
                       <div className="kpiVal">{Number.isFinite(paybackYears) ? round(paybackYears,2) + " yıl" : "—"}</div>
-                      <div className="small">CAPEX farkı (B-A): <span className="mono">${round(capexDiff,0)}</span></div>
+                      <div className="small">
+                        CAPEX farkı (B-A): <span className="mono">${round(capexDiff,0)}</span> • Tarife: <span className="mono">${A.tariff}/kWh</span> / <span className="mono">${B.tariff}/kWh</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="card12">
-                  <div className="title">Interaktif Grafik (A ve B)</div>
-                  <div className="small" style={{marginBottom:8}}>Hover ile OAT, mod, PLR ve efektif COP’yi görürsün. Açık band = FC bölgesi.</div>
+                  <div className="divider"></div>
+
                   <div className="grid">
                     <div className="card">
-                      <div className="title">{A.name} • Cooling kW</div>
-                      <InteractiveChart data={resA.curve} />
+                      <div className="title">
+                        <div className="titleLeft">{A.name} • Interaktif</div>
+                        <span className="pill">Mod saat kırılımı</span>
+                      </div>
+                      <div className="small" style={{marginBottom:8}}>Hover: OAT, mod, PLR, COPeff. Açık band = FC bölgesi.</div>
+                      <InteractiveChart data={resA.curveKW} title="Cooling kW vs OAT (A)" />
+                      <div style={{marginTop:10}}>
+                        <StackedModeBar fcH={resA.fcHours} mechH={resA.mechHours} />
+                      </div>
                     </div>
+
                     <div className="card">
-                      <div className="title">{B.name} • Cooling kW</div>
-                      <InteractiveChart data={resB.curve} />
+                      <div className="title">
+                        <div className="titleLeft">{B.name} • Interaktif</div>
+                        <span className="pill">Mod saat kırılımı</span>
+                      </div>
+                      <div className="small" style={{marginBottom:8}}>Hover: OAT, mod, PLR, COPeff. Açık band = FC bölgesi.</div>
+                      <InteractiveChart data={resB.curveKW} title="Cooling kW vs OAT (B)" />
+                      <div style={{marginTop:10}}>
+                        <StackedModeBar fcH={resB.fcHours} mechH={resB.mechHours} />
+                      </div>
                     </div>
+
+                    <div className="card12 card">
+                      <div className="title">
+                        <div className="titleLeft">Part‑Load Etkisi (COPeff)</div>
+                        <span className="pill">IPLV‑benzeri</span>
+                      </div>
+                      <div className="small" style={{marginBottom:8}}>
+                        COPeff, COPbase × PLR_multiplier. FC bölgelerinde COP “çok büyük” gösterilir; bu grafikte 12 ile sınırlandı.
+                      </div>
+                      <div className="grid">
+                        <div className="card">
+                          <div className="title"><div className="titleLeft">{A.name} • COPeff</div></div>
+                          <InteractiveChart data={resA.curveCOP.map(d=>({ ...d, y: Math.min(d.y, 12) }))} title="COPeff vs OAT (A) (cap=12)" />
+                        </div>
+                        <div className="card">
+                          <div className="title"><div className="titleLeft">{B.name} • COPeff</div></div>
+                          <InteractiveChart data={resB.curveCOP.map(d=>({ ...d, y: Math.min(d.y, 12) }))} title="COPeff vs OAT (B) (cap=12)" />
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
             )}
 
             {tab==="scenarioA" && (
-              <div className="card12">
+              <div className="card12 card">
                 <div className="title">
-                  {A.name} Ayarları <span className="pill">Profil: {resA.profileName}</span>
-                  <span className="pill">PUE: {round(resA.pue,3)}</span>
-                  <span className="pill">FC%: {round(resA.fcSharePct,1)}%</span>
+                  <div className="titleLeft">
+                    {A.name} Ayarları
+                    <span className="pill">Profil: {resA.profileName}</span>
+                    <span className="pill">PUE: {round(resA.pue,3)}</span>
+                    <span className="pill">FC%: {round(resA.fcSharePct,1)}%</span>
+                  </div>
+                  <button className="btn" onClick={()=>setTab("compare")}>← Karşılaştır</button>
                 </div>
                 <ScenarioEditor s={A} setS={setA} compact />
               </div>
             )}
 
             {tab==="scenarioB" && (
-              <div className="card12">
+              <div className="card12 card">
                 <div className="title">
-                  {B.name} Ayarları <span className="pill">Profil: {resB.profileName}</span>
-                  <span className="pill">PUE: {round(resB.pue,3)}</span>
-                  <span className="pill">FC%: {round(resB.fcSharePct,1)}%</span>
+                  <div className="titleLeft">
+                    {B.name} Ayarları
+                    <span className="pill">Profil: {resB.profileName}</span>
+                    <span className="pill">PUE: {round(resB.pue,3)}</span>
+                    <span className="pill">FC%: {round(resB.fcSharePct,1)}%</span>
+                  </div>
+                  <button className="btn" onClick={()=>setTab("compare")}>← Karşılaştır</button>
                 </div>
                 <ScenarioEditor s={B} setS={setB} compact />
               </div>
@@ -897,80 +1251,93 @@
 
             {tab==="io" && (
               <div className="grid">
-                <div className="card4">
-                  <div className="title">Export / Import</div>
+                <div className="card4 card">
+                  <div className="title"><div className="titleLeft">Export / Import</div></div>
+
                   <button className="btn primary" onClick={exportAll} style={{width:"100%", marginBottom:8}}>JSON Download (A+B)</button>
                   <button className="btn" onClick={copyExportText} style={{width:"100%", marginBottom:8}}>JSON’u Kutucuğa Yaz</button>
-                  <button className="btn" onClick={importAll} style={{width:"100%"}}>Kutucuktan Import</button>
-                  <div className="small" style={{marginTop:10}}>Not: iPhone’da dosya indirme davranışı tarayıcıya göre değişebilir. Metin import her zaman çalışır.</div>
+                  <button className="btn" onClick={importAll} style={{width:"100%", marginBottom:8}}>Kutucuktan Import</button>
+
+                  <button className="btn" onClick={downloadThisHTML} style={{width:"100%", marginBottom:8}}>Mevcut Ayarlarla HTML indir</button>
+
+                  <div className="small">
+                    Not: iOS/Safari’de dosya indirme davranışı tarayıcıya göre değişebilir. Metin import her zaman çalışır.
+                  </div>
                 </div>
 
-                <div className="card12" style={{gridColumn:"span 8"}}>
-                  <div className="title">JSON</div>
-                  <textarea value={ioText} onChange={e=>setIoText(e.target.value)} placeholder='{"A": {...}, "B": {...}}'></textarea>
+                <div className="card8 card">
+                  <div className="title"><div className="titleLeft">JSON</div></div>
+                  <textarea value={ioText} onChange={(e)=>setIoText(e.target.value)} placeholder='{"A": {...}, "B": {...}}'></textarea>
                 </div>
               </div>
             )}
 
             {tab==="report" && (
               <div className="grid">
-                <div className="card12">
-                  <div className="title">Detaylı Rapor (Özet)</div>
+                <div className="card12 card">
+                  <div className="title">
+                    <div className="titleLeft">Detaylı Raporlama</div>
+                    <span className="pill">Aylık (temsili) + Mod saat</span>
+                  </div>
+
                   <div className="kpiGrid">
                     <div className="kpi">
                       <div className="kpiLbl">A: Cooling (MWh) / Total (MWh)</div>
                       <div className="kpiVal">{round(resA.E_cool/1000,1)} / {round(resA.E_total/1000,1)}</div>
-                      <div className="small">FC saat: <span className="mono">{round(resA.fcHours,0)}</span> • Mech saat: <span className="mono">{round(resA.mechHours,0)}</span></div>
+                      <div className="small">FC: <span className="mono">{round(resA.fcHours,0)}</span> h • MECH: <span className="mono">{round(resA.mechHours,0)}</span> h</div>
                     </div>
                     <div className="kpi">
                       <div className="kpiLbl">B: Cooling (MWh) / Total (MWh)</div>
                       <div className="kpiVal">{round(resB.E_cool/1000,1)} / {round(resB.E_total/1000,1)}</div>
-                      <div className="small">FC saat: <span className="mono">{round(resB.fcHours,0)}</span> • Mech saat: <span className="mono">{round(resB.mechHours,0)}</span></div>
+                      <div className="small">FC: <span className="mono">{round(resB.fcHours,0)}</span> h • MECH: <span className="mono">{round(resB.mechHours,0)}</span> h</div>
                     </div>
                     <div className="kpi">
                       <div className="kpiLbl">A: Yıllık Maliyet</div>
                       <div className="kpiVal">${round(resA.costTotal,0)}</div>
+                      <div className="small">Tarife: <span className="mono">${A.tariff}/kWh</span></div>
                     </div>
                     <div className="kpi">
                       <div className="kpiLbl">B: Yıllık Maliyet</div>
                       <div className="kpiVal">${round(resB.costTotal,0)}</div>
+                      <div className="small">Tarife: <span className="mono">${B.tariff}/kWh</span></div>
                     </div>
                   </div>
                 </div>
 
-                <div className="card">
-                  <div className="title">Aylık Dağılım — {A.name}</div>
-                  <div className="small" style={{marginBottom:8}}>Aylık dağılım “temsili” ağırlıklarla bölünür. CSV ile gerçek aylık breakdown için saatlik timestamp gerekir.</div>
+                <div className="card card">
+                  <div className="title"><div className="titleLeft">Aylık Dağılım — {A.name}</div></div>
+                  <div className="small" style={{marginBottom:8}}>
+                    Aylık dağılım temsili ağırlıklarla bölünür. Timestamp’li veri olursa gerçek aylık breakdown eklenir.
+                  </div>
                   <MonthlyTable rows={resA.monthly} />
                 </div>
 
-                <div className="card">
-                  <div className="title">Aylık Dağılım — {B.name}</div>
-                  <div className="small" style={{marginBottom:8}}>Aynı metod. Gerçek rapor için timestamp’li veriyle geliştirebiliriz.</div>
+                <div className="card card">
+                  <div className="title"><div className="titleLeft">Aylık Dağılım — {B.name}</div></div>
+                  <div className="small" style={{marginBottom:8}}>Aynı yöntem.</div>
                   <MonthlyTable rows={resB.monthly} />
                 </div>
 
-                <div className="card12">
-                  <div className="title">Model Notları / Yorum</div>
-                  <ul style={{margin:0, paddingLeft:18}} className="small">
-                    <li><b>Part-load:</b> PLR = CoolingLoad / DesignCooling. Efektif COP = COP_base × PLR_multiplier.</li>
-                    <li><b>FC modu:</b> Kompresör 0 kabul edilir; pompa+fan+HX cezası kalır.</li>
+                <div className="card12 card">
+                  <div className="title"><div className="titleLeft">Model Notları</div></div>
+                  <ul className="small" style={{margin:0, paddingLeft:18}}>
+                    <li><b>Part‑load:</b> PLR = CoolingLoad / DesignCooling. COPeff = COPbase × PLR_multiplier.</li>
+                    <li><b>FC modu:</b> Kompresör 0 kabul edilir; pompa + fan + HX cezası kalır.</li>
                     <li><b>Ekonomi:</b> Basit geri ödeme = (CAPEX farkı) / (yıllık enerji maliyeti tasarrufu).</li>
-                    <li><b>Gerçek seçime yaklaşmak için:</b> Üretici performans noktalarıyla COP modelini kalibre et; dispatch (N+1), min akış ve VFD eğrileri eklenebilir.</li>
+                    <li><b>Kalibrasyon:</b> Üretici performans noktalarıyla COP & part‑load eğrilerini (IPLV/NPLV) kalibre et.</li>
                   </ul>
                 </div>
               </div>
             )}
 
-            <div className="small" style={{marginTop:14, opacity:.72}}>
-              © DC Cooling Pro (konsept analiz). Üretici selection datası + hidronik/dispatch detaylarıyla kalibre edilmelidir.
+            <div className="small" style={{marginTop:14, opacity:.78}}>
+              <b>TermoLoop Professional Data Center</b> • © konsept analiz • “Close the Loop”
             </div>
           </div>
         );
       }
 
-      const root = ReactDOM.createRoot(document.getElementById("root"));
-      root.render(<App />);
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
     </script>
   </body>
 </html>
